@@ -1,0 +1,40 @@
+<canvas id='tablero' width=800 height=600>
+<script>
+
+function sum_Tra(a, b) {
+    var c = [];
+    for (i = 0; i < a.length; i += 2) {
+        c[i] = (a[i] + b[0])
+        c[i + 1] = (a[i + 1] + b[1])
+    }
+    return c;
+}
+
+function figura(a, colorBorde, colorRelleno, grosor) {
+    ctx.beginPath()
+    ctx.strokeStyle = colorBorde
+    ctx.fillStyle = colorRelleno
+    ctx.lineWidth = grosor;
+    ctx.moveTo(a[0], a[1])
+    for (i = 2; i < a.length; i += 2)
+        ctx.lineTo(a[i], a[i + 1]);
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
+}
+
+
+
+var canvas = document.getElementById('tablero')
+var ctx = canvas.getContext('2d');
+
+var Cortes = [40, 40, 140, 40, 140, 75, 75, 75, 75, 120, 140, 120, 140, 140, 40, 140];
+
+var vec_tran = [250, 350];
+
+var Cortes_transladada = sum_Tra(Cortes, vec_tran)
+
+figura(Cortes, 'red', 'yellow', 9)
+
+figura(Cortes_transladada, 'red', 'yellow', 9)
+</script>
