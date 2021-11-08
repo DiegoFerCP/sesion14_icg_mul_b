@@ -1,0 +1,42 @@
+<canvas id='canvas' width=650 height=650>
+    <script>
+       function centroGeom(coord) {
+    var c = [];
+    for (i = 0; i < m.length; i += 2) {
+        c[i] = (m[i] - y[0])
+        c[i + 1] = (m[i + 1] - y[1])
+    }
+    return c;
+}
+        
+
+        function polygon(a, colorBorde, colorRelleno) {
+            ctx.beginPath()
+            ctx.strokeStyle = colorBorde
+            ctx.fillStyle = colorRelleno
+            ctx.moveTo(a[0], a[1])
+            for (var i = 2; i < a.length; i += 2)
+                ctx.lineTo(a[i], a[i + 1]);
+            ctx.closePath()
+            ctx.stroke()
+            ctx.fill()
+        }
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+    
+        var coord = [40, 40, 110, 40, 110, 85, 70, 85, 70, 140, 40, 140];
+
+
+        polygon(coord, 'purple', 'red');
+
+        vt = centroGeom(coord);    // calcular el vecor de traslacion [x, y]
+        ctx.translate(-vt[0], -vt[1]);   // ubicacion centro de la figura en el origen de coordenadas
+
+        ctx.rotate(-4/48*Math.PI)  //ctx.rotate(75);
+
+        ctx.translate(vt[0], vt[1]);    // retorno de la figura al punto inicial
+
+        polygon(coord, 'red', 'blue');
+
+    </script>
