@@ -1,42 +1,64 @@
 <canvas id='canvas' width=650 height=650>
     <script>
-       function centroGeom(coord) {
-    var c = [];
-    for (i = 0; i < m.length; i += 2) {
-        c[i] = (m[i] - y[0])
-        c[i + 1] = (m[i + 1] - y[1])
-    }
-    return c;
+     function figura(a, colorBorde, colorRelleno) {
+    ctx.beginPath()
+    ctx.strokeStyle = colorBorde
+    ctx.fillStyle = colorRelleno
+    ctx.moveTo(a[0], a[1])
+    for (var i = 2; i < a.length; i += 2)
+        ctx.lineTo(a[i], a[i + 1]);
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
 }
-        
 
-        function polygon(a, colorBorde, colorRelleno) {
-            ctx.beginPath()
-            ctx.strokeStyle = colorBorde
-            ctx.fillStyle = colorRelleno
-            ctx.moveTo(a[0], a[1])
-            for (var i = 2; i < a.length; i += 2)
-                ctx.lineTo(a[i], a[i + 1]);
-            ctx.closePath()
-            ctx.stroke()
-            ctx.fill()
+function centro(coordenada) {
+    tr = [0, 0]
+    veiX = coordenada[0], vesX = coordenada[0] //Es para ver los valores superiores y inferiores de las coordenadas
+    veiY = coordenada[1], vesY = coordenada[1]
+
+    for (i = 2; i < coordenada.length; i += 2) {
+        if (veiY > coordenada[i]) {
+            veiY = coordenada[i];
         }
+        if (vesY < coordenada[i]) {
+            vesY = coordenada[i];
+        }
+    }
+    for (i = 2; i < coordenada.length; i += 2) {
+        if (veiX > coordenada[i]) {
+            veiX = coordenada[i];
+        }
+        if (vesX < coordenada[i]) {
+            vesX = coordenada[i];
+        }
+    }
 
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
-    
-        var coord = [40, 40, 110, 40, 110, 85, 70, 85, 70, 140, 40, 140];
+    promX = -(vesX + veiX) / 2;
+    promY = -(vesY + veiY) / 2;
+    tr = [promX, promY]
+    return tr;
+}
 
 
-        polygon(coord, 'purple', 'red');
 
-        vt = centroGeom(coord);    // calcular el vecor de traslacion [x, y]
-        ctx.translate(-vt[0], -vt[1]);   // ubicacion centro de la figura en el origen de coordenadas
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
 
-        ctx.rotate(-4/48*Math.PI)  //ctx.rotate(75);
+var Piedra = [40, 40, 110, 40, 110, 85, 70, 85, 70, 140, 40, 140];
+var Piedrad = [63, 50, 100, 50, 100, 75, 63, 75];
 
-        ctx.translate(vt[0], vt[1]);    // retorno de la figura al punto inicial
+figura(Piedra, 'yellow', 'red', 9);
+figura(Piedrad, 'yellow', 'white', 5);
 
-        polygon(coord, 'red', 'blue');
+vt = centro(Piedra); // Es para calcular la traslacion en X y en Y.
+ctx.translate(-vt[0], -vt[1]); // Es la ubicacion central de la figura con las coordenadas
 
-    </script>
+ctx.rotate(-4 / 48 * Math.PI) //La rotacion de 75º en rad;
+
+ctx.translate(vt[0], vt[1]); // Para volver al punto inicial
+
+figura(Piedra, 'yellow', 'red', 10);
+figura(Piedrad, 'yellow', 'white', 10);
+
+     </script>
